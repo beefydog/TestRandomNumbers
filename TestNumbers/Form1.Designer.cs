@@ -40,6 +40,10 @@ partial class Form1
             this.txtRange = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtMedian = new System.Windows.Forms.TextBox();
+            this.radCPURandom = new System.Windows.Forms.RadioButton();
+            this.radAlgoRandom = new System.Windows.Forms.RadioButton();
+            this.lblOther = new System.Windows.Forms.Label();
+            this.txtOther = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnStart
@@ -60,7 +64,6 @@ partial class Form1
             this.txtBits.Size = new System.Drawing.Size(47, 26);
             this.txtBits.TabIndex = 1;
             this.txtBits.Text = "8";
-            this.txtBits.TextChanged += new System.EventHandler(this.txtBits_TextChanged);
             this.txtBits.Leave += new System.EventHandler(this.txtBits_Leave);
             // 
             // txtResults
@@ -149,11 +152,54 @@ partial class Form1
             this.txtMedian.Size = new System.Drawing.Size(216, 26);
             this.txtMedian.TabIndex = 10;
             // 
+            // radCPURandom
+            // 
+            this.radCPURandom.AutoSize = true;
+            this.radCPURandom.Checked = true;
+            this.radCPURandom.Location = new System.Drawing.Point(299, 16);
+            this.radCPURandom.Name = "radCPURandom";
+            this.radCPURandom.Size = new System.Drawing.Size(109, 23);
+            this.radCPURandom.TabIndex = 12;
+            this.radCPURandom.TabStop = true;
+            this.radCPURandom.Text = "CPU Random";
+            this.radCPURandom.UseVisualStyleBackColor = true;
+            // 
+            // radAlgoRandom
+            // 
+            this.radAlgoRandom.AutoSize = true;
+            this.radAlgoRandom.Location = new System.Drawing.Point(427, 16);
+            this.radAlgoRandom.Name = "radAlgoRandom";
+            this.radAlgoRandom.Size = new System.Drawing.Size(110, 23);
+            this.radAlgoRandom.TabIndex = 13;
+            this.radAlgoRandom.Text = "Algo Random";
+            this.radAlgoRandom.UseVisualStyleBackColor = true;
+            // 
+            // lblOther
+            // 
+            this.lblOther.AutoSize = true;
+            this.lblOther.Location = new System.Drawing.Point(563, 317);
+            this.lblOther.Name = "lblOther";
+            this.lblOther.Size = new System.Drawing.Size(48, 19);
+            this.lblOther.TabIndex = 15;
+            this.lblOther.Text = "Other:";
+            // 
+            // txtOther
+            // 
+            this.txtOther.Location = new System.Drawing.Point(563, 339);
+            this.txtOther.Name = "txtOther";
+            this.txtOther.ReadOnly = true;
+            this.txtOther.Size = new System.Drawing.Size(216, 26);
+            this.txtOther.TabIndex = 14;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 463);
+            this.Controls.Add(this.lblOther);
+            this.Controls.Add(this.txtOther);
+            this.Controls.Add(this.radAlgoRandom);
+            this.Controls.Add(this.radCPURandom);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtMedian);
             this.Controls.Add(this.label4);
@@ -187,4 +233,8 @@ partial class Form1
     private TextBox txtRange;
     private Label label5;
     private TextBox txtMedian;
+    private RadioButton radCPURandom;
+    private RadioButton radAlgoRandom;
+    private Label lblOther;
+    private TextBox txtOther;
 }
