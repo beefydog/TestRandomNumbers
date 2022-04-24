@@ -1,0 +1,45 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Lucky Lotto Caller";
+
+}
+
+<div class="text-center">
+    <h1>Lucky Lotto Caller</h1>
+    <p>Lucky Lotto Call</p>
+
+    <div class="form-group">
+        <button id="btnget" class="button btn-primary">Get Stuff</button>
+        <p></p>
+
+        <label for="postdata">Enter raw json, below</label>
+        <textarea id="postdata" class="form-control border-1" rows="20" cols="50">
+        {
+          "numberGroups": [
+            {
+              "min": 1,
+              "max": 70,
+              "numbersPerGroup": 5,
+              "divergence": 10,
+              "sumCheck": true,
+              "oeCheck": true
+            },
+            {
+              "min": 1,
+              "max": 25,
+              "numbersPerGroup": 1,
+              "divergence": 10,
+              "sumCheck": false,
+              "oeCheck": false
+            }
+          ],
+          "sets": 10
+        }
+    </textarea>
+    </div>
+
+
+    <p></p>
+    <div id="results"></div>
+</div>
