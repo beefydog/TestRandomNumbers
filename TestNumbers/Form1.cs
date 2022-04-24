@@ -66,7 +66,10 @@ public partial class Form1 : Form
             {
                 sb.Append(GenerateBoolean() ? '1' : '0');
             }
-            Int64 number = Convert.ToInt64(sb.ToString(), 2);
+            string numberStr = sb.ToString();
+            if (GenerateBoolean()) numberStr.Reverse();
+           
+            Int64 number = Convert.ToInt64(numberStr, 2);
             Numbers.Add(Convert.ToDouble(number));
             sbFinal.AppendLine(number.ToString());
         }
