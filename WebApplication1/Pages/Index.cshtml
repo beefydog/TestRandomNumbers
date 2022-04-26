@@ -1,45 +1,208 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Lucky Lotto Caller";
+    ViewData["Title"] = "Lotto Number Set Generator";
 
 }
 
 <div class="text-center">
-    <h1>Lucky Lotto Caller</h1>
-    <p>Lucky Lotto Call</p>
+    <h1>Lotto Number Set Generator</h1>
+    <p></p>
 
-    <div class="form-group">
-        <button id="btnget" class="button btn-primary">Get Stuff</button>
+    <div class="form-group form-control-sm">
+
         <p></p>
 
-        <label for="postdata">Enter raw json, below</label>
-        <textarea id="postdata" class="form-control border-1" rows="20" cols="50">
-        {
-          "numberGroups": [
+        @*  <label for="postdata">Enter raw json, below</label>*@
+        @*            <textarea id="postdata" class="form-control border-1" rows="10" cols="25">
             {
-              "min": 1,
-              "max": 70,
-              "numbersPerGroup": 5,
-              "divergence": 10,
-              "sumCheck": true,
-              "oeCheck": true
+            "numberGroups": [
+            {
+            "min": 1,
+            "max": 70,
+            "numbersPerGroup": 5,
+            "divergence": 10,
+            "sumCheck": true,
+            "oeCheck": true
             },
             {
-              "min": 1,
-              "max": 25,
-              "numbersPerGroup": 1,
-              "divergence": 10,
-              "sumCheck": false,
-              "oeCheck": false
+            "min": 1,
+            "max": 25,
+            "numbersPerGroup": 1,
+            "divergence": 10,
+            "sumCheck": false,
+            "oeCheck": false
             }
-          ],
-          "sets": 10
-        }
-    </textarea>
+            ],
+            "sets": 10
+            }
+            </textarea>*@
+
+        <div class="card">
+            <div class="card-header px-3">
+                Number Groupings (up to 3 per number set)
+            </div>
+            <div class="card-body px-5">
+                <div class="container" id="groupOne">
+                    <div class="row">
+                        <div class="col">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="group1" checked />
+                                <label class="custom-control-label fs-5" for="group1">&nbsp;Group One</label>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="groupMin1" class="form-label">Minimum</label>
+                            <input type="range" class="form-range" min="1" max="127" step="1" id="groupMin1" value="1" />
+                            <input type="text" readonly id="groupMinVal1" class="form-control" value="1" />
+                        </div>
+                        <div class="col">
+                            <label for="groupMax1" class="form-label">Maximum</label>
+                            <input type="range" class="form-range" min="1" max="255" step="1" id="groupMax1" value="70" />
+                            <input type="text" readonly id="groupMaxVal1" class="form-control" value="70" />
+                        </div>
+                        <div class="col">
+                            <label for="numbersPerGroup1" class="form-label">Numbers</label>
+                            <input type="range" class="form-range" min="1" max="10" step="1" id="numbersPerGroup1" value="5" />
+                            <input type="text" readonly id="numbersPerGroupVal1" class="form-control" value="5" />
+                        </div>
+                        <div class="col">
+                            <label for="divergence1" class="form-label">Divergence</label>
+                            <input type="range" class="form-range" min="1" max="50" step="1" id="divergence1" value="15" />
+                            <input type="text" readonly id="divergenceVal1" class="form-control" value="15" />
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Checks</label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="checkSum1" />
+                                <label class="form-check-label" for="checkSum1">Sum</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="checkOE1" />
+                                <label class="form-check-label" for="checkOE1">OddEven</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+                <div class="container border-top" id="groupTwo">
+                    <div class="row">
+                        <div class="col">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="group2" />
+                                <label class="custom-control-label fs-5" for="group2">&nbsp;Group Two</label>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="groupMin2" class="form-label">Minimum</label>
+                            <input type="range" class="form-range" min="1" max="127" step="1" id="groupMin2" value="1" />
+                            <input type="text" readonly id="groupMinVal2" class="form-control" value="1" />
+                        </div>
+                        <div class="col">
+                            <label for="groupMax2" class="form-label">Maximum</label>
+                            <input type="range" class="form-range" min="1" max="255" step="1" id="groupMax2" value="25" />
+                            <input type="text" readonly id="groupMaxVal2" class="form-control" value="25" />
+                        </div>
+                        <div class="col">
+                            <label for="numbersPerGroup2" class="form-label">Numbers</label>
+                            <input type="range" class="form-range" min="1" max="10" step="1" id="numbersPerGroup2" value="1" />
+                            <input type="text" readonly id="numbersPerGroupVal2" class="form-control" value="1" />
+                        </div>
+                        <div class="col">
+                            <label for="divergence2" class="form-label">Divergence</label>
+                            <input type="range" class="form-range" min="1" max="50" step="1" id="divergence2" value="10" />
+                            <input type="text" readonly id="divergenceVal2" class="form-control" value="10" />
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Checks</label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="checkSum2" />
+                                <label class="form-check-label" for="checkSum2">Sum</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="checkOE2" />
+                                <label class="form-check-label" for="checkOE2">OddEven</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="container border-top" id="groupThree">
+                    <div class="row">
+                        <div class="col">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="group3" />
+                                <label class="custom-control-label fs-5" for="group3">&nbsp;Group Three</label>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="groupMin3" class="form-label">Minimum</label>
+                            <input type="range" class="form-range" min="1" max="127" step="1" id="groupMin3" value="1" />
+                            <input type="text" readonly id="groupMinVal3" class="form-control" value="1" />
+                        </div>
+                        <div class="col">
+                            <label for="groupMax3" class="form-label">Maximum</label>
+                            <input type="range" class="form-range" min="1" max="255" step="1" id="groupMax3" value="5" />
+                            <input type="text" readonly id="groupMaxVal3" class="form-control" value="5" />
+                        </div>
+                        <div class="col">
+                            <label for="numbersPerGroup3" class="form-label">Numbers</label>
+                            <input type="range" class="form-range" min="1" max="10" step="1" id="numbersPerGroup3" value="1" />
+                            <input type="text" readonly id="numbersPerGroupVal3" class="form-control" value="1" />
+                        </div>
+                        <div class="col">
+                            <label for="divergence3" class="form-label">Divergence</label>
+                            <input type="range" class="form-range" min="1" max="50" step="1" id="divergence3" value="10" />
+                            <input type="text" readonly id="divergenceVal3" class="form-control" value="10" />
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Checks</label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="checkSum3" />
+                                <label class="form-check-label" for="checkSum3">Sum</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="checkOE3" />
+                                <label class="form-check-label" for="checkOE3">OddEven</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+            </div>
+            <div class="card-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                        </div>
+                        <div class="col">
+                            <label for="numberOfSets" class="form-label">Number Of Sets</label>
+                            <input type="range" id="numberOfSets" class="form-range" min="1" max="20" step="1" value="10" />
+                            <input type="text" readonly id="numberOfSetsVal" class="form-control" value="10" />
+                        </div>
+                        <div class="col d-flex justify-content-center">
+                            <button id="btnget" type="submit" class="btn btn-primary align-self-center">Generate Numbers</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
-
-
     <p></p>
     <div id="results"></div>
+
+
+
 </div>

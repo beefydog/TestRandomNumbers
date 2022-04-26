@@ -16,3 +16,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#results div {
+    padding: 8px;
+}
+/*    #results div input {
+        width: 50px;
+        padding: 2px;
+        margin: 4px;
+    }*/
+
+    #results div span {
+        width: 50px;
+        padding: 2px;
+        margin: 4px;
+    }
