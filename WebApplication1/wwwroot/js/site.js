@@ -20,7 +20,7 @@ $(document).ready(function () {
             jsonSB.push('"divergence": ' + $('#divergence1').val() + ',');
             jsonSB.push('"sumCheck": ' + $('#checkSum1').prop('checked') + ',');
             jsonSB.push('"oeCheck": ' + $('#checkOE1').prop('checked') + '}');
-            grp1count = $("#numbersPerGroupVal1").val(); //this is for setting the colors and also for checking if no groups are selected
+            grp1count = $("#numbersPerGroup1Val").val(); //this is for setting the colors and also for checking if no groups are selected
         };
         if ($("#group2").prop('checked')) {
             jsonSB.push(',{ "min": ' + $('#groupMin2').val() + ',');
@@ -29,7 +29,7 @@ $(document).ready(function () {
             jsonSB.push('"divergence": ' + $('#divergence2').val() + ',');
             jsonSB.push('"sumCheck": ' + $('#checkSum2').prop('checked') + ',');
             jsonSB.push('"oeCheck": ' + $('#checkOE2').prop('checked') + '}');
-            grp2count = $("#numbersPerGroupVal2").val();
+            grp2count = $("#numbersPerGroup2Val").val();
         };
         if ($("#group3").prop('checked')) {
             jsonSB.push(',{ "min": ' + $('#groupMin3').val() + ',');
@@ -38,7 +38,7 @@ $(document).ready(function () {
             jsonSB.push('"divergence": ' + $('#divergence3').val() + ',');
             jsonSB.push('"sumCheck": ' + $('#checkSum3').prop('checked') + ',');
             jsonSB.push('"oeCheck": ' + $('#checkOE3').prop('checked') + '}');
-            grp3count = $("#numbersPerGroupVal3").val();
+            grp3count = $("#numbersPerGroup3Val").val();
         };
         jsonSB.push('], "sets": ' + $('#numberOfSets').val() + '}');
         let finalJson = jsonSB.join('');
@@ -52,58 +52,10 @@ $(document).ready(function () {
         }
     }
 
-    $("#groupMin1").on("input", function () {
-        updateSlider($("#groupMin1"), $("#groupMinVal1"))
+    $(".form-range").on("input", function (e) {
+        updateSlider($(e.currentTarget), $("input[id=" + e.currentTarget.id + "Val]"));
     });
 
-    $("#groupMax1").on("input", function () {
-        updateSlider($("#groupMax1"), $("#groupMaxVal1"))
-    });
-
-    $("#numbersPerGroup1").on("input", function () {
-        updateSlider($("#numbersPerGroup1"), $("#numbersPerGroupVal1"))
-    });
-
-    $("#divergence1").on("input", function () {
-        updateSlider($("#divergence1"), $("#divergenceVal1"))
-    });
-
-
-    $("#groupMin2").on("input", function () {
-        updateSlider($("#groupMin2"), $("#groupMinVal2"))
-    });
-
-    $("#groupMax2").on("input", function () {
-        updateSlider($("#groupMax2"), $("#groupMaxVal2"))
-    });
-
-    $("#numbersPerGroup2").on("input", function () {
-        updateSlider($("#numbersPerGroup2"), $("#numbersPerGroupVal2"))
-    });
-
-    $("#divergence2").on("input", function () {
-        updateSlider($("#divergence2"), $("#divergenceVal2"))
-    });
-
-    $("#groupMin3").on("input", function () {
-        updateSlider($("#groupMin3"), $("#groupMinVal3"))
-    });
-
-    $("#groupMax3").on("input", function () {
-        updateSlider($("#groupMax3"), $("#groupMaxVal3"))
-    });
-
-    $("#numbersPerGroup3").on("input", function () {
-        updateSlider($("#numbersPerGroup3"), $("#numbersPerGroupVal3"))
-    });
-
-    $("#divergence3").on("input", function () {
-        updateSlider($("#divergence3"), $("#divergenceVal3"))
-    });
-
-    $("#numberOfSets").on("input", function () {
-        updateSlider($("#numberOfSets"), $("#numberOfSetsVal"))
-    });
 
     let serviceUrl = "https://api.miraclecat.com/api/numbersets";
     //   let serviceUrl = "https://localhost:7238/api/numbersets";   //for testing
