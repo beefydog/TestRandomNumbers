@@ -1,5 +1,7 @@
 ﻿
 $(document).ready(function () {
+    $("#progress").hide();
+
     $('#btnget').click(function () {
         GetData(formToJson());
     });
@@ -45,13 +47,14 @@ $(document).ready(function () {
         return finalJson;
     }
 
+    //assign textbox to value of slider
     function updateSlider(slider, sliderText) {
         if (typeof (slider) !== 'undefined' || typeof (sliderText) !== 'undefined') {
             sliderText.val(slider.val());
             setTimeout(updateSlider, 50);
         }
     }
-
+    //generic event handler to call slider update to textbox 
     $(".form-range").on("input", function (e) {
         updateSlider($(e.currentTarget), $("input[id=" + e.currentTarget.id + "Val]"));
     });
@@ -75,12 +78,13 @@ $(document).ready(function () {
         let i = 0; //for color array index
 
         if (grp1count + grp2count + grp3count > 0) {
-            $('#results').empty();
+            $('#results').empty(); //clear results
             $.ajax({
                 url: serviceUrl,
                 type: "post",
                 data: postdata,
                 contentType: "application/json",
+                beforeSend: function () { $("#progress").show(); },
                 success: function (result, status, xhr) {
                     let resultsDiv = $('#results');
                     result.forEach(function (lottoset) {
@@ -98,6 +102,9 @@ $(document).ready(function () {
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr);
+                },
+                complete: function () {
+                    $("#progress").hide();
                 }
 
             });
