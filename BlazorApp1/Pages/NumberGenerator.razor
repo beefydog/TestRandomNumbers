@@ -1,0 +1,83 @@
+﻿@page "/numbergenerator"
+@inject HttpClient client
+@using System.Text.Json
+
+<div class="text-center">
+    <h1>Number Set Generator</h1>
+    <br />
+    <button id="btnget" type="submit" @onclick="ProcessForm" class="btn btn-primary align-self-center">Generate Numbers</button>
+    <br /><br /><br />
+    <div id="results">
+        @if (Numbersets[0][0] != 0) //check to see if actual data
+        {
+            @foreach (int[] numberset in Numbersets)
+            {
+                NumberSetCount++;
+                <div>
+                    Set#@NumberSetCount.ToString() &nbsp;
+                    @foreach (int number in numberset)
+                    {
+                        <span>@number.ToString()</span>
+                        <span>&nbsp;</span>
+                    }
+                </div>
+                <br />
+            }
+
+            ClearOutputs();
+        }
+    </div>
+
+</div>
+
+@code {
+
+    public int[][] Numbersets { get; set; } = new int[][] { new int[] { 0 } }; //init with 1st array element (of parent array) to 0    // number sets returned as jagged array from api
+    public int NumberSetCount { get; set; } = 0;   // for display purposes
+
+    protected override void OnInitialized()
+    {
+        ClearOutputs();
+        client.BaseAddress = new Uri(@"https://api.miraclecat.com/");
+    }
+
+    protected void ClearOutputs()
+    {
+        NumberSetCount = 0;
+        Numbersets = new int[][] { new int[] { 0 } };
+    }
+
+    private async Task ProcessForm()
+    {
+        //test data
+        Models.Root postData = new() { sets = 10 };
+        postData.numberGroups.Add(new Models.NumberGroup() { numbersPerGroup = 5, min = 1, max = 70, divergence = 15, oeCheck = true, sumCheck = true });
+        postData.numberGroups.Add(new Models.NumberGroup() { numbersPerGroup = 1, min = 1, max = 25, divergence = 50, oeCheck = false, sumCheck = false });
+
+        Numbersets = await GetNumbersets(postData);
+    }
+
+    private async Task<int[][]> GetNumbersets(Models.Root postData)
+    {
+        int[][] retval = new int[][] { new int[] { 0 } }; //init with 1st array element of main array to 0
+        try
+        {
+            HttpResponseMessage response = await client.PostAsJsonAsync(@"api/numbersets", postData);
+            if (response.IsSuccessStatusCode)
+            {
+                string? responseData = await response.Content.ReadAsStringAsync();
+                if (responseData != null)
+                {
+                    retval = JsonSerializer.Deserialize<int[][]>(responseData);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error! " + ex.ToString());
+        }
+        return retval;
+    }
+
+
+}
