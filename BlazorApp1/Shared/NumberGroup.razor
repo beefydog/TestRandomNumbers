@@ -1,0 +1,77 @@
+﻿<div class="container" id="Group@(GroupId)">
+    <div class="row">
+        <div class="col">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="chkGroup@(GroupId)" checked="@GroupChecked" />
+                <label class="custom-control-label fs-5" for="chkGroup@(GroupId)">&nbsp;Group&nbsp;@(GroupId)</label>
+            </div>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label for="groupMin@(GroupId)" class="form-label">Minimum</label>
+            <input type="range" class="form-range" min="1" max="127" step="1" id="groupMin@(GroupId)" value="@GroupMinValue" />
+            <input type="text" readonly id="groupMin@(GroupId)Val" class="form-control" value="@GroupMinValue" />
+        </div>
+        <div class="col">
+            <label for="groupMax@(GroupId)" class="form-label">Maximum</label>
+            <input type="range" class="form-range" min="1" max="255" step="1" id="groupMax@(GroupId)" value="@GroupMaxValue" />
+            <input type="text" readonly id="groupMax@(GroupId)Val" class="form-control" value="@GroupMaxValue" />
+        </div>
+        <div class="col">
+            <label for="numbersPerGroup@(GroupId)" class="form-label">Numbers</label>
+            <input type="range" class="form-range" min="1" max="10" step="1" id="numbersPerGroup@(GroupId)" value="@NumbersPerGroup" />
+            <input type="text" readonly id="numbersPerGroup@(GroupId)Val" class="form-control" value="@NumbersPerGroup" />
+        </div>
+        <div class="col">
+            <label for="divergence@(GroupId)" class="form-label">Divergence</label>
+            <input type="range" class="form-range" min="1" max="50" step="1" id="divergence@(GroupId)" value="@Divergence" />
+            <input type="text" readonly id="divergence@(GroupId)Val" class="form-control" value="@Divergence" />
+        </div>
+        <div class="col">
+            <label class="form-label ">Checks</label>
+            <div class="form-check form-switch" style="text-align: left;">
+                <input class="form-check-input" type="checkbox" role="switch" id="checkSum@(GroupId)" checked="@CheckSumChecked" />
+                <label class="form-check-label" for="checkSum@(GroupId)">Sum</label>
+            </div>
+            <div class="form-check form-switch" style="text-align: left;">
+                <input class="form-check-input" type="checkbox" role="switch" id="checkOE@(GroupId)" checked="@CheckOEChecked"  />
+                <label class="form-check-label" for="checkOE@(GroupId)">OddEven</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+@code {
+    [ParameterAttribute]
+    public int GroupId { get; set; } = 0;
+
+    [ParameterAttribute]
+    public bool GroupChecked { get; set; }
+
+    [ParameterAttribute]
+    public int GroupMinValue { get; set; }
+
+    [ParameterAttribute]
+    public int GroupMaxValue { get; set; }
+
+    [ParameterAttribute]
+    public int NumbersPerGroup { get; set; }
+
+    [ParameterAttribute]
+    public int Divergence { get; set; }
+
+    [ParameterAttribute]
+    public bool CheckSumChecked { get; set; }
+
+    [ParameterAttribute]
+    public bool CheckOEChecked { get; set; }
+
+}

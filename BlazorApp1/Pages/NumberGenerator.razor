@@ -4,8 +4,45 @@
 
 <div class="text-center">
     <h1>Number Set Generator</h1>
-    <br />
-    <button id="btnget" type="submit" @onclick="ProcessForm" class="btn btn-primary align-self-center">Generate Numbers</button>
+    <div class="form-group form-control-sm">
+        <p></p>
+        <div class="card">
+            <div class="card-header px-3">
+                Number Groupings (up to 3 per number set)
+            </div>
+            <div class="card-body px-5">
+                <NumberGroup GroupId=1 GroupChecked=true GroupMinValue=1 GroupMaxValue=70 NumbersPerGroup=5 Divergence=15 CheckOEChecked=true CheckSumChecked=true />
+                <hr />
+                <NumberGroup GroupId=2 GroupChecked=true GroupMinValue=1 GroupMaxValue=25 NumbersPerGroup=1 Divergence=15 CheckOEChecked=false CheckSumChecked=false />
+                <hr />
+                <NumberGroup GroupId=3 GroupChecked=false GroupMinValue=1 GroupMaxValue=5 NumbersPerGroup=1 Divergence=15 CheckOEChecked=false CheckSumChecked=false />
+            </div>
+            <div class="card-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col d-flex justify-content-center">
+                            @*                           <div id="progress" class="align-self-center">
+                                <div class="spinner-grow text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                                </div>
+                                </div>*@
+                        </div>
+                        <div class="col">
+                            <label for="numberOfSets" class="form-label">Number Of Sets</label>
+                            <input type="range" id="numberOfSets" class="form-range" min="1" max="20" step="1" value="10" />
+                            <input type="text" readonly id="numberOfSetsVal" class="form-control" value="10" />
+                        </div>
+                        <div class="col d-flex justify-content-center">
+                            <button id="btnget" type="submit" @onclick="ProcessForm" class="btn btn-primary align-self-center">Generate Numbers</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
     <br /><br /><br />
     <div id="results">
         @if (Numbersets[0][0] != 0) //check to see if actual data
@@ -30,6 +67,9 @@
 </div>
 
 @code {
+
+
+
 
     public int[][] Numbersets { get; set; } = new int[][] { new int[] { 0 } }; //init with 1st array element (of parent array) to 0    // number sets returned as jagged array from api
     public int NumberSetCount { get; set; } = 0;   // for display purposes
@@ -58,7 +98,7 @@
 
     private async Task<int[][]> GetNumbersets(Models.Root postData)
     {
-        int[][]? retval = null ;
+        int[][]? retval = null;
         try
         {
             HttpResponseMessage response = await client.PostAsJsonAsync(@"api/numbersets", postData);
