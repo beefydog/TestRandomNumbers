@@ -23,8 +23,7 @@
                 </div>
                 <br />
             }
-
-            ClearOutputs();
+            ClearResults();
         }
     </div>
 
@@ -35,13 +34,13 @@
     public int[][] Numbersets { get; set; } = new int[][] { new int[] { 0 } }; //init with 1st array element (of parent array) to 0    // number sets returned as jagged array from api
     public int NumberSetCount { get; set; } = 0;   // for display purposes
 
-    protected override void OnInitialized()
+    protected override void OnInitialized() //so far, not calling async methods from here, so using synchronous method
     {
-        ClearOutputs();
-        client.BaseAddress = new Uri(@"https://api.miraclecat.com/");
+        ClearResults();
+        client.BaseAddress = new Uri(@"https://api.miraclecat.com/"); //NOTE: Some settings for the HttpClient can only be set once! This is one of them.
     }
 
-    protected void ClearOutputs()
+    protected void ClearResults()
     {
         NumberSetCount = 0;
         Numbersets = new int[][] { new int[] { 0 } };
@@ -59,7 +58,7 @@
 
     private async Task<int[][]> GetNumbersets(Models.Root postData)
     {
-        int[][] retval = new int[][] { new int[] { 0 } }; //init with 1st array element of main array to 0
+        int[][]? retval = null ;
         try
         {
             HttpResponseMessage response = await client.PostAsJsonAsync(@"api/numbersets", postData);
@@ -76,7 +75,7 @@
         {
             Console.WriteLine("Error! " + ex.ToString());
         }
-        return retval;
+        return retval != null ? retval : new int[][] { new int[] { 0 } };
     }
 
 
