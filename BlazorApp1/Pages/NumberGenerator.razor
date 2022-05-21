@@ -49,13 +49,12 @@
         {
             @foreach (int[] numberset in Numbersets)
             {
-                NumberSetCount++;
+                int idx = 0;
                 <div>
-                    Set#@NumberSetCount.ToString() &nbsp;
                     @foreach (int number in numberset)
                     {
-                        <span>@number.ToString()</span>
-                        <span>&nbsp;</span>
+                        <span class="badge h2" style="background-color: @(BGColors[idx])">@number.ToString()</span>
+                        idx++;
                     }
                 </div>
                 <br />
@@ -75,6 +74,9 @@
         new NumberGroup(2, true, 1, 25, 1, 15, false, false),
         new NumberGroup(3, true, 1, 5, 1, 15, false, false)
     };
+
+    string[] colors = new string[3] { "#03a9f4", "#e64a19", "#aa00ff" };
+    List<string> BGColors = new();
 
     public int NumberOfSets { get; set; } = 10;
 
@@ -106,19 +108,20 @@
     private async Task ProcessForm()
     {
         Models.Root postData = new() { sets = NumberOfSets };
-
+        BGColors.Clear();
+        int colorIndex = 0;
         foreach (NumberGroup n in NGs)
         {
             if (n.Enabled)
             {
                 postData.numberGroups.Add(new Models.NumberGroupRequest() { numbersPerGroup = n.NumbersPerGroup, min = n.MinValue, max = n.MaxValue, divergence = n.Divergence, oeCheck = n.CheckOEEnabled, sumCheck = n.CheckSumEnabled });
+                for (int i = 0; i < n.NumbersPerGroup; i++)
+                {
+                    BGColors.Add(colors[colorIndex]);
+                }
+                colorIndex++;
             }
         }
-
-               //test data & test API post (this will be set  by the values from the form - how that is done, still working on)
-       // Models.Root postData = new() { sets = 10 };
-        //postData.numberGroups.Add(new Models.NumberGroupRequest() { numbersPerGroup = 5, min = 1, max = 70, divergence = 15, oeCheck = true, sumCheck = true });
-        //postData.numberGroups.Add(new Models.NumberGroupRequest() { numbersPerGroup = 1, min = 1, max = 25, divergence = 50, oeCheck = false, sumCheck = false });
 
         Numbersets = await GetNumbersets(postData);
     }
