@@ -11,29 +11,29 @@
                 Number Groupings (up to 3 per number set)
             </div>
             <div class="card-body px-5">
-                <NumberGroup GroupId=1 GroupChecked=true GroupMinValue=1 GroupMaxValue=70 NumbersPerGroup=5 Divergence=15 CheckOEChecked=true CheckSumChecked=true />
+                <BlockNumberGroup ng="NGs[0]" OnItemChange="HandleGroupChange" />
                 <hr />
-                <NumberGroup GroupId=2 GroupChecked=true GroupMinValue=1 GroupMaxValue=25 NumbersPerGroup=1 Divergence=15 CheckOEChecked=false CheckSumChecked=false />
+                <BlockNumberGroup ng="NGs[1]" OnItemChange="HandleGroupChange" />
                 <hr />
-                <NumberGroup GroupId=3 GroupChecked=false GroupMinValue=1 GroupMaxValue=5 NumbersPerGroup=1 Divergence=15 CheckOEChecked=false CheckSumChecked=false />
+                <BlockNumberGroup ng="NGs[2]" OnItemChange="HandleGroupChange" />
             </div>
             <div class="card-footer">
                 <div class="container">
                     <div class="row">
                         <div class="col d-flex justify-content-center">
                             @*                           <div id="progress" class="align-self-center">
-                                <div class="spinner-grow text-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                                </div>
-                                </div>*@
+                            <div class="spinner-grow text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                            </div>
+                            </div>*@
                         </div>
                         <div class="col">
                             <label for="numberOfSets" class="form-label">Number Of Sets</label>
-                            <input type="range" id="numberOfSets" class="form-range" min="1" max="20" step="1" value="10" />
-                            <input type="text" readonly id="numberOfSetsVal" class="form-control" value="10" />
+                            <input type="range" id="numberOfSets" role="slider" class="form-range" min="1" max="20" step="1" @bind="NumberOfSets" @oninput="@((e) => NumberOfSets = Convert.ToInt32(e.Value))" />
+                            <input type="number" id="numberOfSetsVal" role="spinbutton" class="form-control" @bind="NumberOfSets" />
                         </div>
                         <div class="col d-flex justify-content-center">
-                            <button id="btnget" type="submit" @onclick="ProcessForm" class="btn btn-primary align-self-center">Generate Numbers</button>
+                            <button type="submit" id="btnget" role="button" class="btn btn-primary align-self-center" @onclick="ProcessForm">Generate Numbers</button>
                         </div>
                     </div>
                 </div>
@@ -68,8 +68,15 @@
 
 @code {
 
+    // data for prepopulating the child NumberGroup components
+    List<NumberGroup> NGs = new List<NumberGroup>()
+    {
+        new NumberGroup(1, true, 1, 70, 5, 15, true, true),
+        new NumberGroup(2, true, 1, 25, 1, 15, false, false),
+        new NumberGroup(3, true, 1, 5, 1, 15, false, false)
+    };
 
-
+    public int NumberOfSets { get; set; } = 10;
 
     public int[][] Numbersets { get; set; } = new int[][] { new int[] { 0 } }; //init with 1st array element (of parent array) to 0    // number sets returned as jagged array from api
     public int NumberSetCount { get; set; } = 0;   // for display purposes
@@ -80,6 +87,16 @@
         client.BaseAddress = new Uri(@"https://api.miraclecat.com/"); //NOTE: Some settings for the HttpClient can only be set once! This is one of them.
     }
 
+    /// <summary>
+    /// This sets the data retrieved from the child component(s) using the groupid-1 for the List index
+    /// </summary>
+    /// <param name="n"></param>
+    private void HandleGroupChange(NumberGroup n)
+    {
+        int index = n.GroupId - 1;
+        NGs[index] = n;
+    }
+
     protected void ClearResults()
     {
         NumberSetCount = 0;
@@ -88,10 +105,20 @@
 
     private async Task ProcessForm()
     {
-        //test data
-        Models.Root postData = new() { sets = 10 };
-        postData.numberGroups.Add(new Models.NumberGroup() { numbersPerGroup = 5, min = 1, max = 70, divergence = 15, oeCheck = true, sumCheck = true });
-        postData.numberGroups.Add(new Models.NumberGroup() { numbersPerGroup = 1, min = 1, max = 25, divergence = 50, oeCheck = false, sumCheck = false });
+        Models.Root postData = new() { sets = NumberOfSets };
+
+        foreach (NumberGroup n in NGs)
+        {
+            if (n.Enabled)
+            {
+                postData.numberGroups.Add(new Models.NumberGroupRequest() { numbersPerGroup = n.NumbersPerGroup, min = n.MinValue, max = n.MaxValue, divergence = n.Divergence, oeCheck = n.CheckOEEnabled, sumCheck = n.CheckSumEnabled });
+            }
+        }
+
+               //test data & test API post (this will be set  by the values from the form - how that is done, still working on)
+       // Models.Root postData = new() { sets = 10 };
+        //postData.numberGroups.Add(new Models.NumberGroupRequest() { numbersPerGroup = 5, min = 1, max = 70, divergence = 15, oeCheck = true, sumCheck = true });
+        //postData.numberGroups.Add(new Models.NumberGroupRequest() { numbersPerGroup = 1, min = 1, max = 25, divergence = 50, oeCheck = false, sumCheck = false });
 
         Numbersets = await GetNumbersets(postData);
     }
