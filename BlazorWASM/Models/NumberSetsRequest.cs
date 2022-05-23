@@ -12,7 +12,7 @@ public class NumberGroupRequest
 
 public class Root
 {
-    public List<NumberGroupRequest> numberGroups { get; set; } = new List<NumberGroupRequest>();
+    public List<NumberGroupRequest> numberSet { get; set; } = new List<NumberGroupRequest>();
     public int sets { get; set; }
 }
 

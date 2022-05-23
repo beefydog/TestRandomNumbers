@@ -1,5 +1,4 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $("#progress").hide();
 
     $('#btnget').click(function () {
@@ -14,7 +13,7 @@ $(document).ready(function () {
 
     function formToJson() {
         let jsonSB = []; //using JS array like a string builder - hence why it ends with SB
-        jsonSB.push('{ "numberGroups": [');
+        jsonSB.push('{ "numberSet": [');
         if ($("#group1").prop('checked')) {
             jsonSB.push('{ "min": ' + $('#groupMin1').val() + ',');
             jsonSB.push('"max": ' + $('#groupMax1').val() + ',');
@@ -48,17 +47,32 @@ $(document).ready(function () {
     }
 
     //assign textbox to value of slider
-    function updateSlider(slider, sliderText) {
+    function updateSliderText(slider, sliderText) {
         if (typeof (slider) !== 'undefined' || typeof (sliderText) !== 'undefined') {
             sliderText.val(slider.val());
+            setTimeout(updateSliderText, 50);
+        }
+    }
+
+    //generic event handler for slider update to textbox 
+    $(".form-range").on("input", function (e) {
+        updateSliderText($(e.currentTarget), $("input[id=" + e.currentTarget.id + "Val]"));
+    });
+
+    //assign slider to value of textbox
+    function updateSlider(sliderText, slider) {
+        if (typeof (sliderText) !== 'undefined' || typeof (slider) !== 'undefined') {
+            slider.val(sliderText.val());
             setTimeout(updateSlider, 50);
         }
     }
-    //generic event handler to call slider update to textbox 
-    $(".form-range").on("input", function (e) {
-        updateSlider($(e.currentTarget), $("input[id=" + e.currentTarget.id + "Val]"));
-    });
 
+    //generic event handler for textbox update to slider
+    $(".form-control").on("input", function (e) {
+        let sourceId = e.currentTarget.id;
+        let destId = "input[id=" + sourceId.toString().substr(0, sourceId.length - 3) + "]";
+        updateSlider($(e.currentTarget), $(destId));
+    });
 
     let serviceUrl = "https://api.miraclecat.com/api/numbersets";
     //   let serviceUrl = "https://localhost:7238/api/numbersets";   //for testing
@@ -97,7 +111,6 @@ $(document).ready(function () {
                             i++;
                         });
                         resultsDiv.append(innerDiv);
-
                     });
                 },
                 error: function (xhr, status, error) {
@@ -106,16 +119,10 @@ $(document).ready(function () {
                 complete: function () {
                     $("#progress").hide();
                 }
-
             });
-
-
         } else {
             alert("No groups checked!");
         }
-
-
-
     };
 
 
