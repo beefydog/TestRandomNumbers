@@ -38,7 +38,6 @@ namespace BlazorWASM.Pages
         protected override void OnInitialized() //so far, not calling async methods from here, so using synchronous method
         {
             ClearResults();
-            client.BaseAddress = new Uri(@"https://api.miraclecat.com/"); //NOTE: Some settings for the HttpClient can only be set once! This is one of them.
         }
 
         /// <summary>

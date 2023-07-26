@@ -21,7 +21,7 @@ namespace BlazorApp1.Controls
     public partial class BlockNumberGroup
     {
         [Parameter]
-        public NumberGroup ng { get; set; }
+        public NumberGroup? ng { get; set; }
 
         protected override void OnInitialized()
         {
