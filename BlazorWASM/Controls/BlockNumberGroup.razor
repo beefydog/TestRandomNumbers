@@ -17,7 +17,7 @@
         <div class="col">
             <label for="groupMax@(ng.GroupId)" class="form-label">Maximum</label>
             <input type="range" id="groupMax@(ng.GroupId)" class="form-range" min="1" max="255" step="1" role="slider" @bind="ng.MaxValue" @oninput="@((e) => ng.MaxValue = Convert.ToInt32(e.Value))" @onfocusout="() => HandleChange()" />
-            <input type="number" id="groupMax@(ng.GroupId)Val" class="form-control" min="1" max="255"  role="spinbutton" @bind="ng.MaxValue" @onfocusout="() => HandleChange()" @onclick="() => HandleChange()" />
+            <input type="number" id="groupMax@(ng.GroupId)Val" class="form-control" min="1" max="255" role="spinbutton" @bind="ng.MaxValue" @onfocusout="() => HandleChange()" @onclick="() => HandleChange()" />
         </div>
         <div class="col">
             <label for="numbersPerGroup@(ng.GroupId)" class="form-label">Numbers</label>
@@ -32,11 +32,11 @@
         <div class="col">
             <label class="form-label">Checks</label>
             <div class="form-check form-switch" style="text-align: left;">
-                <input class="form-check-input" type="checkbox" role="switch" id="checkSum@(ng.GroupId)" @bind="ng.CheckSumEnabled" @onfocusout="() => HandleChange()"  />
+                <input class="form-check-input" type="checkbox" role="switch" id="checkSum@(ng.GroupId)" @bind="ng.CheckSumEnabled" @onfocusout="() => HandleChange()" />
                 <label class="form-check-label" for="checkSum@(ng.GroupId)">Sum</label>
             </div>
             <div class="form-check form-switch" style="text-align: left;">
-                <input class="form-check-input" type="checkbox" role="switch" id="checkOE@(ng.GroupId)" @bind="ng.CheckOEEnabled" @onfocusout="() => HandleChange()"  />
+                <input class="form-check-input" type="checkbox" role="switch" id="checkOE@(ng.GroupId)" @bind="ng.CheckOEEnabled" @onfocusout="() => HandleChange()" />
                 <label class="form-check-label" for="checkOE@(ng.GroupId)">OddEven</label>
             </div>
         </div>
