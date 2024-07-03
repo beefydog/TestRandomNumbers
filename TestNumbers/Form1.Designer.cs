@@ -56,7 +56,7 @@ partial class Form1
         btnStart.TabIndex = 0;
         btnStart.Text = "Generate";
         btnStart.UseVisualStyleBackColor = true;
-        btnStart.Click += button1_Click;
+        btnStart.Click += Button1_Click;
         // 
         // txtBits
         // 
@@ -67,7 +67,9 @@ partial class Form1
         txtBits.Size = new Size(42, 23);
         txtBits.TabIndex = 1;
         txtBits.Text = "8";
-        txtBits.Leave += txtBits_Leave;
+        txtBits.TextChanged += Txt_TextChanged;
+        txtBits.KeyPress += Txt_KeyPress;
+        txtBits.Leave += TxtBits_Leave;
         // 
         // txtResults
         // 
@@ -104,7 +106,10 @@ partial class Form1
         txtIterations.Name = "txtIterations";
         txtIterations.Size = new Size(71, 23);
         txtIterations.TabIndex = 4;
-        txtIterations.Text = "500";
+        txtIterations.Text = "100";
+        txtIterations.TextChanged += Txt_TextChanged;
+        txtIterations.KeyPress += Txt_KeyPress;
+        txtIterations.Leave += txtIterations_Leave;
         // 
         // label3
         // 
@@ -210,8 +215,7 @@ partial class Form1
         // 
         // Form1
         // 
-        AutoScaleDimensions = new SizeF(7F, 15F);
-        AutoScaleMode = AutoScaleMode.Font;
+        AutoScaleMode = AutoScaleMode.None;
         ClientSize = new Size(700, 366);
         Controls.Add(progressBar1);
         Controls.Add(lblOther);
@@ -231,6 +235,8 @@ partial class Form1
         Controls.Add(txtBits);
         Controls.Add(btnStart);
         Margin = new Padding(3, 2, 3, 2);
+        MaximizeBox = false;
+        MaximumSize = new Size(716, 405);
         Name = "Form1";
         Text = "CPU Random vs ALGO Random";
         ResumeLayout(false);
